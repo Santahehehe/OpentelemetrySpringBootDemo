@@ -1,6 +1,6 @@
 1.main: 用內嵌的tomcat啟動專案
 
-2.Tomcat-war:用外建的Tomcat + 專案的war檔啟動 
+2.Tomcat-war:用外建的Tomcat + 專案的war檔(包含了引用的jar)啟動 
 	OpentelemetrydemoApplication.java
 	。1.application的主類別要extends SpringBootServletInitializer
 	。2.加configure
@@ -12,6 +12,7 @@
 	pom.xml
 	。1.加<packaging>war</packaging>
 
-	把打包好的war檔放在webapps底下
-
-	啟動後去http://localhost:8080/opentelemetrydemo-0.0.1-SNAPSHOT/service/path2
+	。部署到Tomcat
+	1.把打包好的war檔放在webapps底下
+	2.在\bin自己建一個setenv.bat，用set "CATALINA_OPTS=%CATALINA_OPTS% -Dspring.application.name=Service-tomcat"設定application.name
+	3.啟動後去http://localhost:8080/opentelemetrydemo-0.0.1-SNAPSHOT/service/path2

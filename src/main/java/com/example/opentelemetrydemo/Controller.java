@@ -26,8 +26,9 @@ public class Controller {
     public ResponseEntity path1() {
 
         logger.info("Incoming request at {} for request /path1 ", applicationName);
-        String response = restTemplate.getForObject("http://localhost:8090/service/path2", String.class);
-        return ResponseEntity.ok("response from /path1 + " + response);
+//        String response = restTemplate.getForObject("http://localhost:8090/service/path2", String.class);
+//        return ResponseEntity.ok("response from /path1 + " + response);
+        return ResponseEntity.ok("response from /path1");
     }
 
     @GetMapping("/path2")
