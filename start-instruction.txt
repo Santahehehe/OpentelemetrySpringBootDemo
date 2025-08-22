@@ -1,0 +1,49 @@
+。啟動指令
+java -jar `
+target/opentelemetrydemo-0.0.1-SNAPSHOT.jar `
+--spring.application.name=Service-1 `
+--server.port=8080
+
+。logging.pattern.level=%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]
+	。logging.pattern.level
+這是 Spring Boot 提供的屬性，用來設定 日誌等級行（level line）的輸出格式。
+
+也就是說，它只影響 每行日誌中等級相關的那一部分。
+
+這個 pattern 可以使用 Logback 支援的格式字元（pattern specifiers）。
+	
+	。%5p
+%p 表示 log 等級（Log Level），例如 INFO、DEBUG、ERROR。
+
+5 表示固定寬度 5 個字元，不夠會自動補空格。
+
+例如 INFO → 右邊補 1 個空格 → 對齊美觀
+
+整體效果：日誌開頭會顯示 [INFO ]、[ERROR] 這種對齊好的等級欄位。
+
+	[${spring.application.name:},%X{traceId:-},%X{spanId:-}]
+這部分是你自訂 MDC / 屬性欄位，放在方括號裡：
+
+a. ${spring.application.name:}
+這是 Spring 表達式，會讀取 spring.application.name 的值。
+
+冒號 : 後面可以設定 預設值（如果沒設定應用名稱就會用預設值）。
+
+例子：
+
+如果 application.properties 有 spring.application.name=Service-2 → 顯示 Service-2
+
+如果沒有設定 → 顯示空字串或你填的預設值
+
+b. %X{traceId:-}
+%X{key} 是 MDC（Mapped Diagnostic Context） 的取值方式，用來顯示 分布式追蹤 ID。
+
+traceId 是 OpenTelemetry 或 Sleuth 自動放入 MDC 的追蹤 ID。
+
+:- 表示 如果沒有值就顯示 -，避免空白。
+
+c. %X{spanId:-}
+跟 %X{traceId:-} 類似，但顯示 當前 span ID。
+
+span 是 trace 裡的一個操作單元，用於追蹤請求流程。
+

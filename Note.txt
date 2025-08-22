@@ -1,0 +1,17 @@
+1.main: 用內嵌的tomcat啟動專案
+
+2.Tomcat-war:用外建的Tomcat + 專案的war檔啟動 
+	OpentelemetrydemoApplication.java
+	。1.application的主類別要extends SpringBootServletInitializer
+	。2.加configure
+		@Override
+		protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+			return builder.sources(OpentelemetrydemoApplication.class);
+		}
+
+	pom.xml
+	。1.加<packaging>war</packaging>
+
+	把打包好的war檔放在webapps底下
+
+	啟動後去http://localhost:8080/opentelemetrydemo-0.0.1-SNAPSHOT/service/path2
